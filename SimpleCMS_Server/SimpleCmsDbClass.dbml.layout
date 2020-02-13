@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="SimpleCmsDbClass">
+  <DataContextMoniker Name="/SimpleCmsDbClassDataContext" />
+  <nestedChildShapes>
+    <classShape Id="1ac76300-e9ce-455b-9311-cb796a654c04" absoluteBounds="0.75, 0.75, 2, 1.3862939453125">
+      <DataClassMoniker Name="/SimpleCmsDbClassDataContext/Channel" />
+      <nestedChildShapes>
+        <elementListCompartment Id="5a963984-9910-4567-97c6-3d661632bfa3" absoluteBounds="0.765, 1.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="beb21626-224d-4451-b182-027da3315866" absoluteBounds="3.75, 0.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/SimpleCmsDbClassDataContext/WaveData" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6bc6ef26-f809-4e7b-b198-e1a7ac3fea70" absoluteBounds="3.765, 1.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="07266211-3d8c-443b-bef3-f2830e6cd37e" absoluteBounds="3.625, 2.75, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/SimpleCmsDbClassDataContext/TrendData" />
+      <nestedChildShapes>
+        <elementListCompartment Id="acfe9fb6-dbd2-4fd9-b7d5-4ecdff480dd1" absoluteBounds="3.6399999999999997, 3.21, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="c22d87af-c07b-4f27-9102-2036b4464282" absoluteBounds="0.75, 2.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/SimpleCmsDbClassDataContext/TrendConfig" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0198c060-4ebd-46ec-a2e9-42981601c32a" absoluteBounds="0.76499999999999968, 3.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="74aee243-4842-40a9-8e44-3350e08a72ac" absoluteBounds="0.75, 5, 2, 1.0016910807291666">
+      <DataClassMoniker Name="/SimpleCmsDbClassDataContext/PeakConfig" />
+      <nestedChildShapes>
+        <elementListCompartment Id="88c35ac3-26c4-4d5b-b6da-6643b593a957" absoluteBounds="0.76499999999999968, 5.46, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f3f987a9-75d8-4c88-b9e4-f1f0eb54d6dc" absoluteBounds="3.5, 5, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/SimpleCmsDbClassDataContext/RmsConfig" />
+      <nestedChildShapes>
+        <elementListCompartment Id="94d06266-c661-4f78-b496-c063c7a3a144" absoluteBounds="3.5149999999999997, 5.46, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <inheritanceConnector edgePoints="[(1.75 : 4.1362939453125); (1.75 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+      <nodes>
+        <classShapeMoniker Id="c22d87af-c07b-4f27-9102-2036b4464282" />
+        <classShapeMoniker Id="74aee243-4842-40a9-8e44-3350e08a72ac" />
+      </nodes>
+    </inheritanceConnector>
+    <inheritanceConnector edgePoints="[(1.75 : 4.1362939453125); (1.75 : 4.625); (4.5 : 4.625); (4.5 : 5)]" fixedFrom="NotFixed" fixedTo="NotFixed" TargetRelationshipDomainClassId="7a7fe09e-e9ef-4b01-9ff3-bde95e827b62">
+      <nodes>
+        <classShapeMoniker Id="c22d87af-c07b-4f27-9102-2036b4464282" />
+        <classShapeMoniker Id="f3f987a9-75d8-4c88-b9e4-f1f0eb54d6dc" />
+      </nodes>
+    </inheritanceConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

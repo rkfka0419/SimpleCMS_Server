@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Class="SimpleCmsDbClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Table Name="dbo.Channel_TB" Member="Channel">
+    <Type Name="Channel">
+      <Column Name="Id" Type="System.Int32" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" CanBeNull="true" />
+      <Column Name="sample_rate" Type="System.Int32" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.WaveData_TB" Member="WaveData">
+    <Type Name="WaveData">
+      <Column Name="Id" Type="System.Int32" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="channel_Id" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="time" Type="System.DateTime" CanBeNull="false" />
+      <Column Name="data" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="false" UpdateCheck="Never" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrendData_TB" Member="TrendData">
+    <Type Name="TrendData">
+      <Column Name="Id" Type="System.Int32" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="trendConfig_Id" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      <Column Name="time" Member="Time" Storage="_time" Type="System.DateTime" CanBeNull="false" />
+      <Column Name="value" Member="Value" Storage="_value" Type="System.Double" DbType="Float" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TrendConfig_TB" Member="TrendConfig">
+    <Type Name="TrendConfig" InheritanceCode="1" IsInheritanceDefault="true">
+      <Column Name="Id" Type="System.Int32" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="false" IsDiscriminator="true" />
+      <Column Name="name" Type="System.String" CanBeNull="false" />
+      <Type Name="RmsConfig" InheritanceCode="2">
+        <Column Name="start" Type="System.Int32" DbType="Int" CanBeNull="false" />
+        <Column Name="end" Type="System.Int32" DbType="Int" CanBeNull="false" />
+      </Type>
+      <Type Name="PeakConfig" InheritanceCode="3">
+        <Column Name="option" Type="System.String" CanBeNull="true" />
+      </Type>
+    </Type>
+  </Table>
+</Database>
