@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NAudio.Wave;
+using SimpleCmsDbClassDLL;
 
 namespace SimpleCMS_Server
 {
-    partial class Channel
+    class WaveReader
     {
-        /*
-         *  Channel 이름이 맞는지?
-         *  현재는 테이블 입력을 저장해서 Wave를 넘기는 역할을 가지고 있음
-         *  네이밍 고민할것
-         */
         private WaveIn wi;
-        //private int SAMPLE_RATE = (int)(Math.Pow(2, 13)); // sample rate of the sound card
+        //private WaveData wave;
+        private int SAMPLE_RATE = (int)(Math.Pow(2, 13)); // sample rate of the sound card
         Queue<float> sampleQueue = new Queue<float>();
         Queue<Byte> samplingQueue = new Queue<Byte>();
         public event Action<WaveData> OnReceivedWaveData;
 
-        partial void OnCreated()
+        public WaveReader()
         {
             int devcount = WaveIn.DeviceCount;
             // see what audio devices are available
@@ -29,8 +23,7 @@ namespace SimpleCMS_Server
             // get the WaveIn class started
             wi = new WaveIn();
             wi.DeviceNumber = 0;
-            Console.WriteLine(sample_rate +" "+ Id);
-            wi.WaveFormat = new NAudio.Wave.WaveFormat(sample_rate, 1);
+            wi.WaveFormat = new NAudio.Wave.WaveFormat(SAMPLE_RATE, 1);
             //wi.BufferMilliseconds = wi.WaveFormat.AverageBytesPerSecond / 5000;
             //wi.BufferMilliseconds = 100;
 
@@ -41,7 +34,7 @@ namespace SimpleCMS_Server
         {
             try
             {
-                int BUFFER_SIZE = sample_rate * 2;
+                int BUFFER_SIZE = SAMPLE_RATE * 2;
                 byte[] buffer = new byte[BUFFER_SIZE];
 
                 for (int i = 0; i < e.BytesRecorded; i++)
@@ -56,11 +49,11 @@ namespace SimpleCMS_Server
                     }
 
                     WaveData wave = new WaveData();
-                    wave.channel_Id = Id;
+                    wave.channel_Id = wi.DeviceNumber;
                     wave.time = DateTime.Now;
                     wave.data = buffer;
 
-                    wave.Floats = new float[sample_rate];
+                    wave.Floats = new float[SAMPLE_RATE];
                     for (int i = 0; i < buffer.Length; i += 2)
                     {
                         Int16 val = BitConverter.ToInt16(buffer, i);
@@ -82,14 +75,7 @@ namespace SimpleCMS_Server
         }
         public void StartRecording()
         {
-            try
-            {
-                wi.StartRecording();
-            }
-            catch (Exception error)
-            {
-                Console.WriteLine(error.ToString());
-            }
+            wi.StartRecording();
         }
         public void StopRecording()
         {
