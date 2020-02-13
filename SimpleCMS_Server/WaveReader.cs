@@ -8,14 +8,14 @@ namespace SimpleCMS_Server
     class WaveReader
     {
         private WaveIn wi;
-        //private WaveData wave;
-        private int SAMPLE_RATE = (int)(Math.Pow(2, 13)); // sample rate of the sound card
         Queue<float> sampleQueue = new Queue<float>();
         Queue<Byte> samplingQueue = new Queue<Byte>();
         public event Action<WaveData> OnReceivedWaveData;
+        Channel channel;
 
-        public WaveReader()
+        public WaveReader(Channel channel)
         {
+            this.channel = channel;
             int devcount = WaveIn.DeviceCount;
             // see what audio devices are available
             Console.Out.WriteLine("Device Count: {0}.", devcount);
@@ -23,9 +23,8 @@ namespace SimpleCMS_Server
             // get the WaveIn class started
             wi = new WaveIn();
             wi.DeviceNumber = 0;
-            wi.WaveFormat = new NAudio.Wave.WaveFormat(SAMPLE_RATE, 1);
-            //wi.BufferMilliseconds = wi.WaveFormat.AverageBytesPerSecond / 5000;
-            //wi.BufferMilliseconds = 100;
+            
+            wi.WaveFormat = new WaveFormat(this.channel.sample_rate, this.channel.Id);
 
             wi.DataAvailable += new EventHandler<WaveInEventArgs>(wi_DataAvailable);
         }
@@ -34,7 +33,7 @@ namespace SimpleCMS_Server
         {
             try
             {
-                int BUFFER_SIZE = SAMPLE_RATE * 2;
+                int BUFFER_SIZE = this.channel.sample_rate * 2;
                 byte[] buffer = new byte[BUFFER_SIZE];
 
                 for (int i = 0; i < e.BytesRecorded; i++)
@@ -49,11 +48,11 @@ namespace SimpleCMS_Server
                     }
 
                     WaveData wave = new WaveData();
-                    wave.channel_Id = wi.DeviceNumber;
+                    wave.channel_Id = this.channel.Id;
                     wave.time = DateTime.Now;
                     wave.data = buffer;
 
-                    wave.Floats = new float[SAMPLE_RATE];
+                    wave.Floats = new float[this.channel.sample_rate];
                     for (int i = 0; i < buffer.Length; i += 2)
                     {
                         Int16 val = BitConverter.ToInt16(buffer, i);

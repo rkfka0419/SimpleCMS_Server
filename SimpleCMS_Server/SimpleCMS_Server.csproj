@@ -39,23 +39,28 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.3.8.0\lib\net46\Accord.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SimpleCmsDbClassDLL\SimpleCmsDbClassDLL\bin\Debug\Accord.dll</HintPath>
     </Reference>
     <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Math.3.8.0\lib\net46\Accord.Math.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SimpleCmsDbClassDLL\SimpleCmsDbClassDLL\bin\Debug\Accord.Math.dll</HintPath>
     </Reference>
     <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Accord.Math.3.8.0\lib\net46\Accord.Math.Core.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SimpleCmsDbClassDLL\SimpleCmsDbClassDLL\bin\Debug\Accord.Math.Core.dll</HintPath>
     </Reference>
     <Reference Include="NAudio, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.1.10.0\lib\net35\NAudio.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleCmsDbClassDLL">
+      <HintPath>..\..\SimpleCmsDbClassDLL\SimpleCmsDbClassDLL\bin\Debug\SimpleCmsDbClassDLL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    <Reference Include="System.Numerics.Vectors">
+      <HintPath>..\..\SimpleCmsDbClassDLL\SimpleCmsDbClassDLL\bin\Debug\System.Numerics.Vectors.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,27 +73,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channel.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="ITrendCalculator.cs" />
-    <Compile Include="PeakCalculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RmsCalculator.cs" />
-    <Compile Include="SimpleCmsDbClass.cs">
-      <DependentUpon>SimpleCmsDbClass.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="SimpleCmsDbClass.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SimpleCmsDbClass.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Spectrum.cs" />
+    <Compile Include="WaveReader.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,14 +104,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="SimpleCmsDbClass.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>SimpleCmsDbClass.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="SimpleCmsDbClass.dbml.layout">
-      <DependentUpon>SimpleCmsDbClass.dbml</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

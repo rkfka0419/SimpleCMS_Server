@@ -4,8 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28307.960
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCMS_Server", "SimpleCMS_Server\SimpleCMS_Server.csproj", "{DB54E4D3-995A-4CC9-BA35-A0424E96ECB2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96CC0B2E-ED5E-4D8F-90B8-F79E04409ADB} = {96CC0B2E-ED5E-4D8F-90B8-F79E04409ADB}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCMS_Viewer", "SimpleCMS_Viewer\SimpleCMS_Viewer.csproj", "{825CAE9A-718F-4EEB-AF16-AB2887BCD8EE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96CC0B2E-ED5E-4D8F-90B8-F79E04409ADB} = {96CC0B2E-ED5E-4D8F-90B8-F79E04409ADB}
+		{DB54E4D3-995A-4CC9-BA35-A0424E96ECB2} = {DB54E4D3-995A-4CC9-BA35-A0424E96ECB2}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCMS_Configuer", "SimpleCMS_Configuer\SimpleCMS_Configuer.csproj", "{96CC0B2E-ED5E-4D8F-90B8-F79E04409ADB}"
 EndProject
