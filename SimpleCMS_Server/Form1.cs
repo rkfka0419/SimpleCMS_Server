@@ -30,16 +30,21 @@ namespace SimpleCMS_Server
                     return;
                 }
                 Console.WriteLine("DB status normal");
+
+                //일단 한개만 테스트 중
                 channel = db.Channel.Select(row => row).FirstOrDefault();
             }
 
             channelMic = new WaveReader(channel);
-            channelMic.StartRecording();
+            //channelMic.StartRecording();
             channelMic.OnReceivedWaveData += micControll_OnReceivedWaveData;
         }
 
         private void micControll_OnReceivedWaveData(WaveData wave)
         {
+            // wave가 가공되어 넘어올 때마다 DB 연결을 맺고 끊고를 반복?? 효율적인지??
+            // 레코딩 중에는 계속 insert 하기 때문에 연결을 가지고 있으면 어떨까
+
             using (var db = new SimpleCmsDBClassDataContext(connectionString))
             {
                 db.WaveData.InsertOnSubmit(wave);

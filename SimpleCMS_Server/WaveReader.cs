@@ -56,7 +56,7 @@ namespace SimpleCMS_Server
                     for (int i = 0; i < buffer.Length; i += 2)
                     {
                         Int16 val = BitConverter.ToInt16(buffer, i);
-                        sampleQueue.Enqueue(val);
+                        sampleQueue.Enqueue((float)val);
                     }
                     for (int i = 0; i < wave.Floats.Length; i++)
                     {
