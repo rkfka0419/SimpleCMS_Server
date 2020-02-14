@@ -80,14 +80,14 @@ namespace SimpleCMS_Viewer
 
                 //데이터꺼내기
                 // 일단 한개만 꺼내보기 첫번째, 추후에는 채널 ID와 조인 수행해야함
-                var wave = db.WaveData.Select(w => w).FirstOrDefault(); // 
-                wave.ToFloatArray();
+                //var wave = db.WaveData.Select(w => w).FirstOrDefault(); // 
+                //wave.ToFloatArray();
 
-                Spectrum spectrum = new Spectrum();
-                spectrum.GetFFT(wave);
+                //Spectrum spectrum = new Spectrum();
+                //spectrum.GetFFT(wave);
 
-                lineDrawWave.DrawLine(wave);
-                lineDrawFFT.DrawLine(spectrum.fft);
+                //lineDrawWave.DrawLine(wave);
+                //lineDrawFFT.DrawLine(spectrum.fft);
             }
         }
 
@@ -104,17 +104,29 @@ namespace SimpleCMS_Viewer
             if (e.Button == MouseButtons.Right)
             {
                 var clickedTime = DateTime.FromOADate( s.XValues[valueIndex]);
-                MessageBox.Show(
-                    s.Title + 
-                    ", " +
-                    clickedTime +
-                    ", " +
-                    s.YValues[valueIndex].ToString());
+                //    MessageBox.Show(
+                //        s.Title + 
+                //        ", " +
+                //        clickedTime +
+                //        ", " +
+                //        s.YValues[valueIndex].ToString());
+                DrawWaveAndSpecturm(clickedTime);
             }
         }
-        public void DrawWaveAndSpecturm()
+            public void DrawWaveAndSpecturm(DateTime trendTime)
         {
+            using (var db = new SimpleCmsDBClassDataContext(connectionString))
+            {
+                //WaveData wave = new WaveData();
+                var wave = db.WaveData.Where(w => DateTime.Compare(w.time, trendTime) == 0).FirstOrDefault();
+                wave.ToFloatArray();
+                Spectrum spectrum = new Spectrum();
+                spectrum.GetFFT(wave);
 
+                lineDrawWave.DrawLine(wave, true);
+                lineDrawFFT.DrawLine(spectrum.fft, true);
+
+            }
         }
     }
 }
