@@ -984,6 +984,7 @@
             this.tChartWave.Legend.Title.Shadow.Brush.Color = System.Drawing.Color.DarkGray;
             this.tChartWave.Legend.Title.Shadow.Brush.Solid = true;
             this.tChartWave.Legend.Title.Shadow.Brush.Visible = true;
+            this.tChartWave.Legend.Visible = false;
             this.tChartWave.Location = new System.Drawing.Point(3, 651);
             this.tChartWave.Name = "tChartWave";
             // 
@@ -2136,6 +2137,7 @@
             this.tChartFFT.Legend.Title.Shadow.Brush.Color = System.Drawing.Color.DarkGray;
             this.tChartFFT.Legend.Title.Shadow.Brush.Solid = true;
             this.tChartFFT.Legend.Title.Shadow.Brush.Visible = true;
+            this.tChartFFT.Legend.Visible = false;
             this.tChartFFT.Location = new System.Drawing.Point(3, 327);
             this.tChartFFT.Name = "tChartFFT";
             // 
@@ -3260,6 +3262,7 @@
             this.tChartTrends.Legend.Symbol.Shadow.Brush.Color = System.Drawing.Color.DarkGray;
             this.tChartTrends.Legend.Symbol.Shadow.Brush.Solid = true;
             this.tChartTrends.Legend.Symbol.Shadow.Brush.Visible = true;
+            this.tChartTrends.Legend.TextSymbolGap = -1;
             // 
             // 
             // 
@@ -3629,6 +3632,7 @@
             this.tChartTrends.Zoom.Brush.Color = System.Drawing.Color.LightBlue;
             this.tChartTrends.Zoom.Brush.Solid = true;
             this.tChartTrends.Zoom.Brush.Visible = true;
+            this.tChartTrends.Click += new System.EventHandler(this.tChartTrends_Click);
             // 
             // chartStartTime
             // 
