@@ -71,8 +71,8 @@ namespace SimpleCMS_Viewer
                     
                     foreach (var data in item)
                     {
-                        lineTempObj.DrawLine(data.Title, (float)data.Value);
-                        //lineTempObj.DrawLine(data.Title, data.Time, (float)data.Value);
+                        //lineTempObj.DrawLine(data.Title, (float)data.Value);
+                        lineTempObj.DrawLine(data.Title, data.Time, data.Value);
                     }
                     trendList.Add(lineTempObj);
                 }
@@ -103,7 +103,13 @@ namespace SimpleCMS_Viewer
         {
             if (e.Button == MouseButtons.Right)
             {
-                MessageBox.Show(s.Title + " " + s.YValues[valueIndex].ToString());
+                var clickedTime = DateTime.FromOADate( s.XValues[valueIndex]);
+                MessageBox.Show(
+                    s.Title + 
+                    ", " +
+                    clickedTime +
+                    ", " +
+                    s.YValues[valueIndex].ToString());
             }
         }
         public void DrawWaveAndSpecturm()
