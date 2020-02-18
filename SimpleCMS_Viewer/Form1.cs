@@ -12,26 +12,30 @@ using Steema.TeeChart.Styles;
 
 namespace SimpleCMS_Viewer
 {
+
+
     public partial class Form1 : Form
     {
-        const string connectionString = @"Server=.;database=SimpleCMSDB;uid=sa;password=rootroot;";
         LineDrawer lineDrawWave;
         LineDrawer lineDrawFFT;
         List<LineDrawer> trendList;
+        const string connectionString = @"Server=.;database=SimpleCMSDB;uid=sa;password=rootroot;";
+
 
         public Form1()
         {
             InitializeComponent();
 
             trendList = new List<LineDrawer>();
-            lineDrawWave = new LineDrawer(tChartWave, new Steema.TeeChart.Styles.Line());
-            lineDrawFFT = new LineDrawer(tChartFFT, new Steema.TeeChart.Styles.Line());
+            lineDrawWave = new LineDrawer(tChartWave, new Line());
+            lineDrawFFT = new LineDrawer(tChartFFT, new Line());
             chartStartTime.ShowUpDown = true;
             chartStartTime.Format = DateTimePickerFormat.Custom;
             chartStartTime.CustomFormat = "M'월' d'일' H'시' m'분' s'초'";
             chartEndTime.ShowUpDown = true;
             chartEndTime.Format = DateTimePickerFormat.Custom;
             chartEndTime.CustomFormat = "M'월' d'일' H'시' m'분' s'초'";
+
 
             tChartTrends.ClickSeries += trendChart_ClickSeries;
 
@@ -43,39 +47,27 @@ namespace SimpleCMS_Viewer
                     return;
                 }
 
+                tableLayoutPanel1.Controls.Add(tChartTrends, 0, 0);
+                tableLayoutPanel1.Controls.Add(tChartWave, 0, 1);
+                tableLayoutPanel1.Controls.Add(tChartFFT, 0, 2);
+
 
 
                 // 채널 갯수에 따라 TabControl 확장 예정
+                //var channels = db.Channel.Select(channel => channel).ToList();
                 var channels = db.Channel.Select(channel => channel).FirstOrDefault();
                 //tabPage1.Text = channels.name;
                 tabControl.TabPages[0].Text = channels.name;
+
+                foreach (var item in DBController.GetTrendConfigList())
+                {
+                    trendCheckedListBox.Items.Add(item.name);
+                }
 
 
                 //TrendConfig ID와 TrendData의 config_ID를 조인 -> name을 가져온다.
                 //TrendConfig 갯수만큼 LineDraw 인스턴스 생성
                 // 해당 wave 시간의 trend를 화면에 그린다.
-                var trends = from trendData in db.TrendData
-                             from trendConfig in db.TrendConfig
-                             where trendData.trendConfig_Id == trendConfig.Id
-                             select new
-                             {
-                                 Title = trendConfig.name,
-                                 Time = trendData.Time,
-                                 Value = trendData.Value
-                             };
-
-                var groupbyTrend = from trnd in trends group trnd by new { trnd.Title } into grp select grp;
-                foreach (var item in groupbyTrend)
-                {
-                    LineDrawer lineTempObj = new LineDrawer(tChartTrends, new Steema.TeeChart.Styles.Line());
-                    
-                    foreach (var data in item)
-                    {
-                        //lineTempObj.DrawLine(data.Title, (float)data.Value);
-                        lineTempObj.DrawLine(data.Title, data.Time, data.Value);
-                    }
-                    trendList.Add(lineTempObj);
-                }
 
 
                 //데이터꺼내기
@@ -103,30 +95,70 @@ namespace SimpleCMS_Viewer
         {
             if (e.Button == MouseButtons.Right)
             {
-                var clickedTime = DateTime.FromOADate( s.XValues[valueIndex]);
-                //    MessageBox.Show(
-                //        s.Title + 
-                //        ", " +
-                //        clickedTime +
-                //        ", " +
-                //        s.YValues[valueIndex].ToString());
+                var clickedTime = DateTime.FromOADate(s.XValues[valueIndex]);
                 DrawWaveAndSpecturm(clickedTime);
             }
         }
-            public void DrawWaveAndSpecturm(DateTime trendTime)
+
+        public void DrawWaveAndSpecturm(DateTime trendTime)
         {
-            using (var db = new SimpleCmsDBClassDataContext(connectionString))
+            WaveData wave = DBController.GetWaveFromTrendTime(trendTime);
+            try
             {
-                //WaveData wave = new WaveData();
-                var wave = db.WaveData.Where(w => DateTime.Compare(w.time, trendTime) == 0).FirstOrDefault();
                 wave.ToFloatArray();
-                Spectrum spectrum = new Spectrum();
-                spectrum.GetFFT(wave);
-
-                lineDrawWave.DrawLine(wave, true);
-                lineDrawFFT.DrawLine(spectrum.fft, true);
-
             }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
+            Spectrum spectrum = new Spectrum();
+            spectrum.GetFFT(wave);
+
+            lineDrawWave.DrawLine(wave, true);
+            lineDrawFFT.DrawLine(spectrum.fft, true);
+        }
+        
+
+        private void chartStartTime_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if ( e.Delta > 0 )
+            {
+                SendKeys.Send("{UP}");
+            }
+            else
+            {
+                SendKeys.Send("{DOWN}");
+            }
+        }
+        private void chartEndTime_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                SendKeys.Send("{UP}");
+            }
+            else
+            {
+                SendKeys.Send("{DOWN}");
+            }
+        }
+
+        private void btnGetRange_Click(object sender, EventArgs e)
+        {
+            
+            var checkedTrends = trendCheckedListBox.CheckedItems;
+
+            tChartTrends.Series.Clear();
+            foreach (var item in checkedTrends)
+            {
+                Console.WriteLine(item.ToString());
+                var trend = DBController.GetSingleTrendFromTimeRange(item.ToString(), chartStartTime.Value, chartEndTime.Value);
+                Line line = new Line();
+                line.Title = item.ToString();
+                line.Legend.Visible = false;
+                tChartTrends.Series.Add(line);
+                line.Add(trend.Select(w => w.Time).ToArray(), trend.Select(w=>w.Value).ToArray());
+            }
+
         }
     }
 }

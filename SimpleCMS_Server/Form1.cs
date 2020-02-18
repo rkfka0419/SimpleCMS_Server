@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -15,13 +16,13 @@ namespace SimpleCMS_Server
 
         const string connectionString = @"Server=.;database=SimpleCMSDB;uid=sa;password=rootroot;";
 
-        WaveReader channelMic;
+        List<WaveReader> channelList = new List<WaveReader>();
 
         public Form1()
         {
             InitializeComponent();
             
-            Channel channel = new Channel();
+            Channel[] channels;
             using (var db = new SimpleCmsDBClassDataContext(connectionString))
             {
                 if (!db.DatabaseExists())
@@ -32,12 +33,20 @@ namespace SimpleCMS_Server
                 Console.WriteLine("DB status normal");
 
                 //일단 한개만 테스트 중
-                channel = db.Channel.Select(row => row).FirstOrDefault();
+                channels = db.Channel.Select(row => row).ToArray();
             }
 
-            channelMic = new WaveReader(channel);
-            //channelMic.StartRecording();
-            channelMic.OnReceivedWaveData += micControll_OnReceivedWaveData;
+            //channelMic = new WaveReader(channel);
+            //channelMic.StartRecording(); // default 레코딩
+            //channelMic.OnReceivedWaveData += micControll_OnReceivedWaveData;
+            foreach (var channel in channels)
+            {
+                WaveReader recordingDevice = new WaveReader(channel);
+                recordingDevice.StartRecording(); // default 레코딩
+                recordingDevice.OnReceivedWaveData += micControll_OnReceivedWaveData;
+                channelList.Add(recordingDevice);
+            }
+
         }
 
         private void micControll_OnReceivedWaveData(WaveData wave)
@@ -61,12 +70,14 @@ namespace SimpleCMS_Server
 
         private void Btn_Record_Click(object sender, EventArgs e)
         {
-            channelMic.StartRecording();
+            foreach(var device in channelList)
+                device.StartRecording();
         }
 
         private void Btn_Stop_Click(object sender, EventArgs e)
         {
-            channelMic.StopRecording();
+            foreach (var device in channelList)
+                device.StopRecording();
         }
 
         private void Btn_DeleteDB_Click(object sender, EventArgs e)

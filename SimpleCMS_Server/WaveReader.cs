@@ -22,7 +22,7 @@ namespace SimpleCMS_Server
 
             // get the WaveIn class started
             wi = new WaveIn();
-            wi.DeviceNumber = 0;
+            //wi.DeviceNumber = 0;
             
             wi.WaveFormat = new WaveFormat(this.channel.sample_rate, this.channel.Id);
 

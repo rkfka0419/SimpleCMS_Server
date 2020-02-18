@@ -26,9 +26,6 @@ C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\SimpleCMS_Serve
 C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\SimpleCMS_Server.pdb
 C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\NAudio.dll
 C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\SimpleCmsDbClassDLL.dll
-C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\Accord.xml
-C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\Accord.Math.xml
-C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\Accord.Math.Core.xml
 C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\NAudio.xml
 C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\bin\Debug\SimpleCmsDbClassDLL.pdb
 C:\Users\rkfka\source\repos\SimpleCMS\SimpleCMS_Server\obj\Debug\SimpleCMS_Server.csprojAssemblyReference.cache
